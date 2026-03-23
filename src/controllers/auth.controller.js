@@ -35,7 +35,7 @@ async function userRegisterController(req, res) {
       },
       token
    })
-   await emailService.sendRegistrationEmail(user.email , user.name)
+   await emailService.sendRegistrationEmail(user.email, user.name)
 
 }
 
@@ -67,8 +67,8 @@ async function userLoginController(req, res) {
 
    res.status(200).json({
 
-      user:{
-          userId: user._id,
+      user: {
+         userId: user._id,
          email: user.email,
          name: user.name,
       },

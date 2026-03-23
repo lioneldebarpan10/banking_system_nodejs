@@ -12,6 +12,6 @@ const authRouter = require("./routes/auth.routes")
 const accountRouter = require("./routes/account.routes")
 
 // use defined routes
-app.use("/api/auth" , authRouter); // all request hit /api/auth in server will be redirected to authRouter
-app.use("/api/accounts" , accountRouter)
+app.use("/api/auth", authRouter); // all request hit /api/auth in server will be redirected to authRouter
+app.use("/api/accounts", accountRouter)
 module.exports = app
