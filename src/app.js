@@ -10,8 +10,12 @@ app.use(cookieParser())
 // Required Routes
 const authRouter = require("./routes/auth.routes")
 const accountRouter = require("./routes/account.routes")
+const transactionRoutes = require("./routes/transaction.routes")
+
 
 // use defined routes
-app.use("/api/auth", authRouter); // all request hit /api/auth in server will be redirected to authRouter
-app.use("/api/accounts", accountRouter)
+app.use("/api/auth", authRouter); //  hit request /api/auth 
+app.use("/api/accounts", accountRouter) // hti request /api/accounts
+app.use("/api/transactions", transactionRoutes) // hit request /api/transactions
+
 module.exports = app
