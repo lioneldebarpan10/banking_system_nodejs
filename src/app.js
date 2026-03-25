@@ -12,6 +12,10 @@ const authRouter = require("./routes/auth.routes")
 const accountRouter = require("./routes/account.routes")
 const transactionRoutes = require("./routes/transaction.routes")
 
+app.get("/" ,(req , res) => {
+   res.send("Ledger-Transaction system is running")
+})
+
 
 // use defined routes
 app.use("/api/auth", authRouter); //  hit request /api/auth 
