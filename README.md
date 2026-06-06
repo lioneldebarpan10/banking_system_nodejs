@@ -1,172 +1,103 @@
-# 💳 Backend Ledger - Banking Transaction System
+# 💳 Backend Ledger
 
-A production-inspired **Banking Transaction System** built with **Node.js, Express.js, MongoDB, and JWT Authentication**. The project simulates real-world banking operations such as account management, secure authentication, transaction processing, ledger maintenance, and transaction auditing while following industry-standard backend architecture practices.
+> A production-inspired Banking Transaction System built with Node.js, Express.js, MongoDB, and JWT Authentication.
 
----
+Backend Ledger simulates real-world banking workflows including account creation, secure authentication, account-to-account fund transfers, immutable ledger recording, transaction auditing, and email notifications.
 
-## 🚀 Project Overview
-
-Backend Ledger is designed to demonstrate how modern financial systems manage user accounts, transactions, and ledger records securely. Unlike traditional CRUD banking projects, Backend Ledger computes balances from immutable ledger records, supports idempotent transactions, uses MongoDB ACID transactions, and maintains an auditable financial history similar to real-world fintech systems.
-
-The application provides:
-
-* Secure User Authentication
-* Account Management
-* Deposit & Withdrawal Operations
-* Transaction Recording
-* Ledger Tracking
-* Email Notifications
-* JWT-Based Authorization
-* Token Blacklisting for Secure Logout
-
-The project follows a modular MVC architecture, making it scalable, maintainable, and easy to extend with advanced banking features.
+Unlike traditional CRUD banking projects, Backend Ledger implements **ledger-based accounting**, **idempotent transactions**, **MongoDB ACID transactions**, and **JWT token revocation**, concepts commonly used in fintech and banking systems.
 
 ---
 
-## ✨ Key Features
+# 🚀 What Makes This Different?
 
-### 🔐 Authentication & Authorization
+Most student banking projects simply store account balances and update them directly.
 
-* User Registration
-* Secure Login System
-* JWT Authentication
-* Protected Routes
-* Secure Logout using Token Blacklisting
-* Password Hashing with bcrypt
+Backend Ledger follows a ledger-based architecture where:
 
-### 👤 Account Management
-
-* Create Bank Accounts
-* View Account Information
-* Balance Tracking
-* User Account Association
-
-### 💸 Transaction Management
-
-* Deposit Funds
-* Withdraw Funds
-* Transfer Funds
-* Transaction History
-* Transaction Validation
-* Real-Time Balance Updates
-
-### 📒 Ledger System
-
-* Complete Financial Record Tracking
-* Audit-Friendly Transaction Storage
-* Persistent Ledger Entries
-* Transaction Monitoring
-
-### 📧 Email Integration
-
-* Transaction Notifications
-* Account Activity Alerts
-* Automated Email Services
+* Balances are derived from ledger entries
+* Financial records are immutable
+* Transactions are ACID-compliant
+* Duplicate transfers are prevented
+* Audit trails are preserved
+* JWT tokens can be revoked securely
 
 ---
 
-## 🏗️ System Architecture
+# 🏗️ System Architecture
 
 ```text
-Client
-   │
-   ▼
-Express Routes
-   │
-   ▼
-Controllers
-   │
-   ▼
-Business Logic
-   │
-   ▼
-MongoDB Database
+User
+ │
+ ▼
+Authentication Layer
+ │
+ ▼
+Account Service
+ │
+ ▼
+Transaction Engine
+ │
+ ▼
+Ledger System
+ │
+ ▼
+MongoDB
 ```
 
-### Architecture Pattern
+### Architecture Patterns
 
 * MVC Architecture
-* RESTful API Design
-* Modular Code Structure
-* Service Layer Integration
+* RESTful APIs
+* Service Layer Pattern
 * Middleware-Based Security
+* Ledger-Based Accounting
 
 ---
 
-## 📂 Project Structure
+# ✨ Features
 
-```bash
-BACKEND_LEDGER/
-│
-├── src/
-│   │
-│   ├── config/
-│   │   └── db.js
-│   │
-│   ├── controllers/
-│   │   ├── account.controller.js
-│   │   ├── auth.controller.js
-│   │   └── transaction.controller.js
-│   │
-│   ├── middlewares/
-│   │   └── auth.middleware.js
-│   │
-│   ├── models/
-│   │   ├── account.model.js
-│   │   ├── blacklist.model.js
-│   │   ├── ledger.model.js
-│   │   ├── transaction.model.js
-│   │   └── user.model.js
-│   │
-│   ├── routes/
-│   │   ├── account.routes.js
-│   │   ├── auth.routes.js
-│   │   └── transaction.routes.js
-│   │
-│   ├── services/
-│   │   └── email.service.js
-│   │
-│   └── app.js
-│
-├── .env
-├── .gitignore
-├── package.json
-├── package-lock.json
-└── server.js
-```
+## 🔐 Authentication & Authorization
+
+* User Registration
+* User Login
+* JWT Authentication
+* Protected Routes
+* Secure Logout
+* Token Blacklisting
+* Password Hashing using bcrypt
+
+## 🏦 Account Management
+
+* Create Bank Accounts
+* View User Accounts
+* Dynamic Balance Calculation
+* Multiple Account Support
+
+## 💸 Transaction Engine
+
+* Account-to-Account Transfers
+* Initial Fund Injection System
+* Idempotency Protection
+* Transaction Status Tracking
+* MongoDB Session Transactions
+
+## 📒 Ledger System
+
+* Immutable Ledger Records
+* Audit-Friendly Design
+* Financial History Tracking
+* Balance Derived From Ledger Entries
+
+## 📧 Notifications
+
+* Registration Emails
+* Transaction Emails
 
 ---
 
-## 🛠️ Tech Stack
+# 🔄 Transaction Workflow
 
-### Backend
-
-* Node.js
-* Express.js
-
-### Database
-
-* MongoDB
-* Mongoose
-
-### Authentication
-
-* JWT (JSON Web Token)
-* bcrypt
-
-### Services
-
-* Nodemailer
-
-### Environment Management
-
-* dotenv
-
-## 🔄 Transaction Processing Engine
-
-The transaction engine follows a production-inspired 10-step workflow designed to ensure consistency, auditability, and duplicate-request protection.
-
-### Transfer Workflow
+The transaction engine follows a 10-step workflow designed to maintain financial consistency and prevent duplicate transfers.
 
 ```text
 1. Validate Request
@@ -190,30 +121,23 @@ The transaction engine follows a production-inspired 10-step workflow designed t
 10. Send Email Notification
 ```
 
-### Financial Guarantees
+### Guarantees
 
-* Duplicate transaction prevention using Idempotency Keys.
-* Account balance derived from ledger entries.
-* Atomic transaction execution using MongoDB Sessions.
-* Transaction history remains immutable.
-* Ledger integrity maintained even under concurrent requests.
+✔ Duplicate Transaction Prevention
+
+✔ Immutable Financial Records
+
+✔ Atomic Money Transfers
+
+✔ Ledger-Based Balance Tracking
+
+✔ Audit Trail Preservation
 
 ---
 
-## ⚡ ACID Transaction Support
+# ⚡ ACID Transaction Support
 
-The system uses MongoDB Sessions and Transactions to ensure all banking operations execute atomically.
-
-### Example
-
-If any of the following operations fail:
-
-* Transaction Creation
-* Debit Ledger Entry
-* Credit Ledger Entry
-* Status Update
-
-the entire operation is rolled back automatically.
+MongoDB Sessions are used to ensure that all financial operations execute atomically.
 
 ```text
 SUCCESS
@@ -226,538 +150,176 @@ FAILURE
  └── Rollback Everything
 ```
 
-This prevents partial fund transfers and maintains data consistency.
+If any operation fails, the entire transaction is rolled back automatically.
 
 ---
 
-## 🔑 Idempotency Protection
+# 🔑 Idempotency Protection
 
-Every transaction requires a unique idempotency key.
+Every transaction requires a unique `idempotencyKey`.
 
-### Why?
+This prevents duplicate financial operations caused by:
 
-Network retries can accidentally send the same request multiple times.
+* Network Retries
+* Client Timeouts
+* Duplicate Requests
 
-Without protection:
+A common pattern used in payment gateways and fintech systems.
+
+---
+
+# 📡 API Endpoints
+
+## Authentication
+
+| Method | Endpoint             |
+| ------ | -------------------- |
+| POST   | `/api/auth/register` |
+| POST   | `/api/auth/login`    |
+| POST   | `/api/auth/logout`   |
+
+## Accounts
+
+| Method | Endpoint                           |
+| ------ | ---------------------------------- |
+| POST   | `/api/accounts/`                   |
+| GET    | `/api/accounts/`                   |
+| GET    | `/api/accounts/balance/:accountId` |
+
+## Transactions
+
+| Method | Endpoint                                 |
+| ------ | ---------------------------------------- |
+| POST   | `/api/transactions/`                     |
+| POST   | `/api/transactions/system/initial-funds` |
+
+---
+
+# 🗄️ Database Design
+
+## User
+
+Stores:
+
+* Name
+* Email
+* Hashed Password
+* System User Flag
+
+## Account
+
+Stores:
+
+* Account Owner
+* Currency
+* Account Status
+
+### Account Status
 
 ```text
-Transfer ₹1000
-Retry Request
-Transfer ₹1000 Again
-```
-
-Total Money Sent = ₹2000 ❌
-
-With Idempotency:
-
-```text
-Transfer ₹1000
-Retry Request
-Already Processed
-```
-
-Total Money Sent = ₹1000 ✅
-
-This pattern is widely used in payment gateways such as Stripe and Razorpay.
-
----
-
-## 🔐 Authentication Workflow
-
-### Registration Flow
-
-```text
-User Registration
-        │
-Create User
-        │
-Hash Password (bcrypt)
-        │
-Generate JWT
-        │
-Send Welcome Email
-        │
-Return Authentication Token
-```
-
-### Login Flow
-
-```text
-User Login
-        │
-Fetch User
-        │
-Verify Password
-        │
-Generate JWT
-        │
-Return Token
-```
-
-### Logout Flow
-
-```text
-User Logout
-        │
-Store Token In Blacklist
-        │
-Clear Cookie
-        │
-Reject Future Requests
+Active
+Frozen
+Closed
 ```
 
 ---
 
-## 🚫 Token Revocation System
+## Transaction
 
-JWTs are stateless by nature.
+Stores:
 
-To implement secure logout, the project introduces a Token Blacklist Collection.
+* Sender Account
+* Receiver Account
+* Amount
+* Status
+* Idempotency Key
 
-### Process
-
-```text
-User Logout
-       │
-Store JWT
-       │
-Blacklist Collection
-       │
-Authentication Middleware
-       │
-Access Denied
-```
-
-### Additional Optimization
-
-Blacklisted tokens automatically expire after 3 days using MongoDB TTL indexes.
-
-This prevents unnecessary database growth.
-
----
-
-## 📧 Event-Driven Email Notifications
-
-The system sends email notifications after critical actions.
-
-### Supported Events
-
-* User Registration
-* Successful Fund Transfer
-
-### Benefits
-
-* Improved user experience
-* Transaction visibility
-* Banking-style notifications
-
----
-
-## 🏦 Initial Fund Injection System
-
-A dedicated system-user account is responsible for injecting initial funds.
-
-### Why?
-
-In real banking systems, money is not generated by regular users.
-
-Special internal accounts perform controlled fund creation.
-
-### Workflow
-
-```text
-System User
-      │
-Create Transaction
-      │
-Generate Ledger Entries
-      │
-Credit Customer Account
-      │
-Mark Transaction Complete
-```
-
-Only privileged system users can access this route.
-
----
-
-## 📊 System Design Principles
-
-The project follows several concepts commonly used in financial technology systems:
-
-### Ledger-Based Accounting
-
-Balances are computed from historical records instead of stored values.
-
-### Immutable Audit Trail
-
-Financial history cannot be modified after creation.
-
-### Atomic Transactions
-
-Money transfer operations either complete fully or not at all.
-
-### Idempotent Requests
-
-Duplicate transaction processing is prevented.
-
-### Secure Authentication
-
-JWT-based authentication with token revocation support.
-
-### Separation of Concerns
-
-Controllers, Models, Routes, Services, and Middleware are organized independently for maintainability.
-
----
-
-## 💼 Backend Engineering Concepts Demonstrated
-
-This project showcases practical implementation of:
-
-* RESTful API Design
-* MVC Architecture
-* JWT Authentication
-* Token Revocation
-* MongoDB Aggregation
-* MongoDB Transactions
-* ACID Principles
-* Ledger Accounting
-* Idempotent APIs
-* Email Service Integration
-* Middleware-Based Authorization
-* Financial Data Integrity
-* Audit Logging
-* Scalable Backend Architecture
-
-
-## 📡 API Endpoints
-
-### 🔐 Authentication Routes
-
-| Method | Endpoint | Description |
-|----------|------------|------------|
-| POST | `/api/auth/register` | Register a new user |
-| POST | `/api/auth/login` | Login user and generate JWT |
-| POST | `/api/auth/logout` | Logout user and blacklist token |
-
----
-
-### 👤 Account Routes
-
-| Method | Endpoint | Description |
-|----------|------------|------------|
-| POST | `/api/accounts/` | Create a new account |
-| GET | `/api/accounts/` | Get all accounts of logged-in user |
-| GET | `/api/accounts/balance/:accountId` | Get account balance |
-
-> All Account Routes require JWT Authentication.
-
----
-
-### 💸 Transaction Routes
-
-| Method | Endpoint | Description |
-|----------|------------|------------|
-| POST | `/api/transactions/` | Create a transaction |
-| POST | `/api/transactions/system/initial-funds` | Create initial funds for system account |
-
-> Transaction creation requires authenticated users.
-
-> Initial Fund creation is restricted to system users through dedicated authorization middleware.
-
-
-## 🎯 Core Banking Functionalities
-
-### Account Creation
-
-Users can create multiple accounts that are linked to their profile.
-
-### Fund Transfer
-
-Supports secure money transfers between accounts while maintaining transaction integrity.
-
-### Balance Tracking
-
-Every transaction automatically updates account balances.
-
-### Ledger Recording
-
-All financial operations are stored in a dedicated ledger for auditability and tracking.
-
-### Initial Funding System
-
-A privileged system route allows creation of initial funds, simulating how real banking systems inject funds into accounts.
-
-
-## 🔒 Security Features
-
-### Authentication Security
-
-* JWT Authentication
-* Route Protection
-* Authorization Middleware
-* Secure Logout
-
-### Data Security
-
-* Password Hashing using bcrypt
-* Environment Variables
-* Input Validation
-* Protected Sensitive Data
-
-### Session Security
-
-* Token Blacklisting
-* Invalid Token Prevention
-* Authentication Middleware
-
-## 🗄️ Database Design & Data Models
-
-The system follows a **Ledger-Based Accounting Architecture**, where account balances are not stored directly in the database. Instead, balances are computed from immutable ledger entries, ensuring auditability, consistency, and financial integrity.
-
----
-
-## 👤 User Model
-
-Represents authenticated users of the banking system.
-
-### Fields
-
-| Field      | Type    | Description                        |
-| ---------- | ------- | ---------------------------------- |
-| name       | String  | User's full name                   |
-| email      | String  | Unique email address               |
-| password   | String  | Securely hashed password           |
-| systemUser | Boolean | Internal privileged system account |
-
-### Security Features
-
-* Passwords are hashed using bcrypt before storage.
-* Password field is hidden by default.
-* Email uniqueness enforced.
-* Regex-based email validation.
-* Internal system users cannot be modified after creation.
-
-### Purpose
-
-Acts as the primary identity layer for authentication and authorization.
-
----
-
-## 🏦 Account Model
-
-Represents a bank account owned by a user.
-
-### Fields
-
-| Field    | Type     | Description              |
-| -------- | -------- | ------------------------ |
-| user     | ObjectId | Account owner            |
-| status   | String   | Active / Frozen / Closed |
-| currency | String   | Account currency         |
-
-### Indexes
-
-```js
-{ user: 1, status: 1 }
-```
-
-### Special Capability
-
-The account does not store balance directly.
-
-Instead, balance is calculated dynamically from ledger entries using MongoDB Aggregation Pipelines.
-
-### Balance Calculation
-
-```text
-Balance =
-Total Credits
--
-Total Debits
-```
-
-This approach prevents accidental balance corruption and mirrors real-world banking systems.
-
----
-
-## 💸 Transaction Model
-
-Represents a transfer of funds between two accounts.
-
-### Fields
-
-| Field          | Type     | Description                             |
-| -------------- | -------- | --------------------------------------- |
-| fromAccount    | ObjectId | Sender account                          |
-| toAccount      | ObjectId | Receiver account                        |
-| amount         | Number   | Transfer amount                         |
-| status         | String   | Pending / Completed / Failed / Reversed |
-| idempotencyKey | String   | Prevents duplicate transactions         |
-
-### Transaction Lifecycle
+### Transaction States
 
 ```text
 Pending
-   │
-   ├──► Completed
-   │
-   ├──► Failed
-   │
-   └──► Reversed
+Completed
+Failed
+Reversed
 ```
-
-### Production Feature: Idempotency
-
-Every transaction requires a unique idempotency key.
-
-This guarantees that repeated API requests cannot accidentally process the same financial transaction multiple times.
-
-A common requirement in payment gateways and fintech systems.
 
 ---
 
-## 📒 Ledger Model
+## Ledger
 
-The most important component of the system.
+Stores immutable financial records.
 
-Stores immutable accounting records for every financial operation.
-
-### Fields
-
-| Field       | Type     | Description            |
-| ----------- | -------- | ---------------------- |
-| account     | ObjectId | Related account        |
-| transaction | ObjectId | Associated transaction |
-| amount      | Number   | Transaction amount     |
-| type        | String   | Credit / Debit         |
-
-### Immutable Ledger Architecture
-
-Ledger entries cannot be:
-
-* Updated
-* Deleted
-* Replaced
-* Modified
-
-Any attempt triggers an exception.
+### Ledger Types
 
 ```text
-Credit Entry
-     +
-Debit Entry
-     =
-Account Balance
+Credit
+Debit
 ```
 
-### Why This Matters
-
-Real banking systems never modify historical financial records.
-
-Instead of editing transactions, new entries are created to maintain a complete audit trail.
-
-This project follows the same principle.
-
-### Audit Benefits
-
-* Complete transaction history
-* Regulatory-friendly design
-* Tamper-resistant records
-* Financial traceability
-
----
-
-## 🚫 Token Blacklist Model
-
-Used for secure logout functionality.
-
-### Fields
-
-| Field | Type   | Description           |
-| ----- | ------ | --------------------- |
-| token | String | Invalidated JWT Token |
-
-### Security Enhancement
-
-When users logout:
-
-1. JWT token is stored in blacklist.
-2. Future requests using that token are rejected.
-3. Blacklisted tokens automatically expire after 3 days.
-
-### TTL Index
-
-```js
-expireAfterSeconds: 259200
-```
-
-This prevents database growth while maintaining logout security.
-
----
-
-## 🔗 Entity Relationships
+Balance is calculated as:
 
 ```text
-User
- │
- └───< Account
-          │
-          │
-          ├──< Transaction >──┐
-          │                   │
-          │                   │
-          └──< Ledger >────────┘
+Total Credits - Total Debits
 ```
-
-### Relationship Overview
-
-* One User can own multiple Accounts.
-* One Transaction connects two Accounts.
-* One Transaction generates Ledger Entries.
-* Ledger Entries determine Account Balance.
-* JWT Tokens are managed separately through the Blacklist collection.
 
 ---
 
-## 🎯 Financial Integrity Principles Implemented
+## Token Blacklist
 
-### Double-Entry Inspired Accounting
+Stores invalidated JWT tokens.
 
-Every transfer creates ledger records that preserve financial consistency.
+Used to implement secure logout.
 
-### Immutable Audit Trail
+Tokens automatically expire after 3 days using MongoDB TTL indexes.
 
-Historical records can never be altered.
+---
 
-### Dynamic Balance Calculation
+# 🔒 Security Features
 
-Balances are derived from ledger entries rather than stored values.
+* JWT Authentication
+* Password Hashing (bcrypt)
+* Route Protection
+* Token Revocation
+* Input Validation
+* Environment Variables
+* Immutable Ledger Records
+* Transaction Integrity Checks
 
-### Idempotent Transactions
+---
 
-Duplicate requests cannot create duplicate transfers.
+# 🛠️ Tech Stack
 
-### Secure Authentication
+### Backend
 
-JWT Authentication with token revocation support.
+* Node.js
+* Express.js
 
-These principles closely resemble practices used in modern fintech, payment gateway, and banking backend systems.
+### Database
 
+* MongoDB
+* Mongoose
 
-## ⚙️ Installation Guide
+### Authentication
+
+* JWT
+* bcrypt
+
+### Services
+
+* Nodemailer
+
+### Environment Management
+
+* dotenv
+
+---
+
+# ⚙️ Installation
 
 ### Clone Repository
 
 ```bash
-git clone https://github.com/your-username/backend-ledger.git
-```
-
-### Navigate to Project
-
-```bash
-cd backend-ledger
+git clone https://github.com/YOUR_USERNAME/backend-ledger.git
 ```
 
 ### Install Dependencies
@@ -768,32 +330,23 @@ npm install
 
 ### Configure Environment Variables
 
-Create a `.env` file:
-
 ```env
-
 MONGO_URI=your_mongodb_connection_string
 
 JWT_SECRET=your_secret_key
-
-REFRESH_TOKEN=your_refresh_token
-
-CLIENT_ID=your_client_id
-
-CLIENT_SECRET=your_client_secret
 
 EMAIL_USER=your_email
 
 EMAIL_PASS=your_email_password
 ```
 
-### Start Development Server
+### Run Development Server
 
 ```bash
 npm run dev
 ```
 
-### Start Production Server
+### Run Production Server
 
 ```bash
 npm start
@@ -801,76 +354,31 @@ npm start
 
 ---
 
-## 📈 Future Enhancements
+# 📈 Future Improvements
 
 * Role-Based Access Control (RBAC)
 * Two-Factor Authentication (2FA)
 * Redis Caching
-* Docker Containerization
-* Kubernetes Deployment
-* Microservices Architecture
-* Fraud Detection Module
-* Rate Limiting
-* Admin Dashboard
+* Docker Deployment
+* Kubernetes
+* Swagger API Documentation
+* Fraud Detection Engine
 * Real-Time Notifications
-* API Documentation using Swagger
 
 ---
 
-## 🎯 Learning Outcomes
-
-Through this project, I gained hands-on experience in:
-
-* Backend Development
-* REST API Design
-* MongoDB Data Modeling
-* Authentication & Authorization
-* Financial Transaction Systems
-* Ledger Management
-* Middleware Development
-* Email Service Integration
-* Scalable Project Architecture
-* Secure Coding Practices
-
----
-
-## 📊 Project Highlights
-
-✔ Production-Oriented Backend Architecture
-
-✔ Banking Transaction Simulation
-
-✔ JWT Authentication & Secure Logout
-
-✔ Ledger-Based Transaction Tracking
-
-✔ Email Notification Service
-
-✔ MongoDB Data Modeling
-
-✔ Clean MVC Structure
-
-✔ Scalable and Maintainable Codebase
-
----
-
-## 👨‍💻 Author
+# 👨‍💻 Author
 
 ### Debarpan Deb
 
 Computer Science & Engineering Student
 
-Aspiring Full Stack Developer | Backend Developer
+Aspiring Backend & Full Stack Developer
 
-### Connect With Me
+**GitHub:** https://github.com/YOUR_USERNAME
 
-* GitHub: https://github.com/YOUR_USERNAME
-* LinkedIn: https://linkedin.com/in/YOUR_LINKEDIN
+**LinkedIn:** https://linkedin.com/in/YOUR_LINKEDIN
 
 ---
 
-## ⭐ Support
-
-If you found this project useful or interesting, consider giving it a ⭐ on GitHub.
-
-It helps others discover the project and motivates further development.
+⭐ If you found this project interesting, consider giving it a star.
