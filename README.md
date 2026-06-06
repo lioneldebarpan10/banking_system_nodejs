@@ -1,3 +1,9 @@
+![Node.js](https://img.shields.io/badge/Node.js-Backend-green)
+![Express.js](https://img.shields.io/badge/Express.js-Framework-black)
+![MongoDB](https://img.shields.io/badge/MongoDB-Database-green)
+![JWT](https://img.shields.io/badge/JWT-Authentication-orange)
+![Mongoose](https://img.shields.io/badge/Mongoose-ODM-red)
+
 # 💳 Backend Ledger
 
 > A production-inspired Banking Transaction System built with Node.js, Express.js, MongoDB, and JWT Authentication.
@@ -192,6 +198,180 @@ A common pattern used in payment gateways and fintech systems.
 | ------ | ---------------------------------------- |
 | POST   | `/api/transactions/`                     |
 | POST   | `/api/transactions/system/initial-funds` |
+
+
+# 📬 API Response Examples
+
+## User Registration
+
+### Request
+
+```json
+{
+  "name": "Debarpan Deb",
+  "email": "debarpan@example.com",
+  "password": "password123"
+}
+```
+
+### Response
+
+```json
+{
+  "user": {
+    "_id": "6853c1f2a89b6e1d6a9f2b1a",
+    "email": "debarpan@example.com",
+    "name": "Debarpan Deb"
+  },
+  "token": "eyJhbGciOiJIUzI1NiIs..."
+}
+```
+
+---
+
+## User Login
+
+### Request
+
+```json
+{
+  "email": "debarpan@example.com",
+  "password": "password123"
+}
+```
+
+### Response
+
+```json
+{
+  "user": {
+    "userId": "6853c1f2a89b6e1d6a9f2b1a",
+    "email": "debarpan@example.com",
+    "name": "Debarpan Deb"
+  },
+  "token": "eyJhbGciOiJIUzI1NiIs..."
+}
+```
+
+---
+
+## Create Account
+
+### Response
+
+```json
+{
+  "message": "Account Created Successfully",
+  "account": {
+    "_id": "6853d5d9c12f2e42f3a91b7c",
+    "user": "6853c1f2a89b6e1d6a9f2b1a",
+    "status": "Active",
+    "currency": "INR"
+  }
+}
+```
+
+---
+
+## Get Account Balance
+
+### Response
+
+```json
+{
+  "accountId": "6853d5d9c12f2e42f3a91b7c",
+  "balance": 5000
+}
+```
+
+---
+
+## Create Transaction
+
+### Request
+
+```json
+{
+  "fromAccount": "6853d5d9c12f2e42f3a91b7c",
+  "toAccount": "6853d8b1f7c9d2a8e0a4512b",
+  "amount": 1000,
+  "idempotencyKey": "txn-001"
+}
+```
+
+### Response
+
+```json
+{
+  "message": "Transaction created successfully",
+  "transaction": {
+    "_id": "6853f4a2d12c4b7b8f0e4419",
+    "fromAccount": "6853d5d9c12f2e42f3a91b7c",
+    "toAccount": "6853d8b1f7c9d2a8e0a4512b",
+    "amount": 1000,
+    "status": "Completed",
+    "idempotencyKey": "txn-001"
+  }
+}
+```
+
+---
+
+## Duplicate Transaction Protection
+
+### Response
+
+```json
+{
+  "message": "Transaction is already processed"
+}
+```
+
+---
+
+## Insufficient Balance
+
+### Response
+
+```json
+{
+  "message": "Insufficient balance. Current balance is 500 Requested balance is 1000"
+}
+```
+
+---
+
+## User Logout
+
+### Response
+
+```json
+{
+  "message": "User logged out successfully"
+}
+```
+
+---
+
+## Error Response Format
+
+```json
+{
+  "message": "Invalid User or Password"
+}
+```
+
+### Common HTTP Status Codes
+
+| Status Code | Meaning               |
+| ----------- | --------------------- |
+| 200         | Success               |
+| 201         | Resource Created      |
+| 400         | Bad Request           |
+| 401         | Unauthorized          |
+| 404         | Resource Not Found    |
+| 422         | Validation Error      |
+| 500         | Internal Server Error |
 
 ---
 
