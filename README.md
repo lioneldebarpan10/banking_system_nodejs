@@ -6,7 +6,7 @@ A production-inspired **Banking Transaction System** built with **Node.js, Expre
 
 ## 🚀 Project Overview
 
-Backend Ledger is designed to demonstrate how modern financial systems manage user accounts, transactions, and ledger records securely.
+Backend Ledger is designed to demonstrate how modern financial systems manage user accounts, transactions, and ledger records securely. Unlike traditional CRUD banking projects, Backend Ledger computes balances from immutable ledger records, supports idempotent transactions, uses MongoDB ACID transactions, and maintains an auditable financial history similar to real-world fintech systems.
 
 The application provides:
 
