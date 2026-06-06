@@ -230,6 +230,29 @@ Email Notification
 > Initial Fund creation is restricted to system users through dedicated authorization middleware.
 
 
+## 🎯 Core Banking Functionalities
+
+### Account Creation
+
+Users can create multiple accounts that are linked to their profile.
+
+### Fund Transfer
+
+Supports secure money transfers between accounts while maintaining transaction integrity.
+
+### Balance Tracking
+
+Every transaction automatically updates account balances.
+
+### Ledger Recording
+
+All financial operations are stored in a dedicated ledger for auditability and tracking.
+
+### Initial Funding System
+
+A privileged system route allows creation of initial funds, simulating how real banking systems inject funds into accounts.
+
+
 ## 🔒 Security Features
 
 ### Authentication Security
