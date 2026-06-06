@@ -275,51 +275,239 @@ A privileged system route allows creation of initial funds, simulating how real 
 * Invalid Token Prevention
 * Authentication Middleware
 
----
+## 🗄️ Database Design & Data Models
 
-## 🗄️ Database Models
-
-### User Model
-
-Stores:
-
-* User Information
-* Authentication Data
-* Account References
-
-### Account Model
-
-Stores:
-
-* Account Number
-* Current Balance
-* Account Owner
-
-### Transaction Model
-
-Stores:
-
-* Transaction Type
-* Amount
-* Sender
-* Receiver
-* Timestamp
-
-### Ledger Model
-
-Stores:
-
-* Financial Records
-* Transaction Logs
-* Historical Tracking
-
-### Blacklist Model
-
-Stores:
-
-* Invalidated JWT Tokens
+The system follows a **Ledger-Based Accounting Architecture**, where account balances are not stored directly in the database. Instead, balances are computed from immutable ledger entries, ensuring auditability, consistency, and financial integrity.
 
 ---
+
+## 👤 User Model
+
+Represents authenticated users of the banking system.
+
+### Fields
+
+| Field      | Type    | Description                        |
+| ---------- | ------- | ---------------------------------- |
+| name       | String  | User's full name                   |
+| email      | String  | Unique email address               |
+| password   | String  | Securely hashed password           |
+| systemUser | Boolean | Internal privileged system account |
+
+### Security Features
+
+* Passwords are hashed using bcrypt before storage.
+* Password field is hidden by default.
+* Email uniqueness enforced.
+* Regex-based email validation.
+* Internal system users cannot be modified after creation.
+
+### Purpose
+
+Acts as the primary identity layer for authentication and authorization.
+
+---
+
+## 🏦 Account Model
+
+Represents a bank account owned by a user.
+
+### Fields
+
+| Field    | Type     | Description              |
+| -------- | -------- | ------------------------ |
+| user     | ObjectId | Account owner            |
+| status   | String   | Active / Frozen / Closed |
+| currency | String   | Account currency         |
+
+### Indexes
+
+```js
+{ user: 1, status: 1 }
+```
+
+### Special Capability
+
+The account does not store balance directly.
+
+Instead, balance is calculated dynamically from ledger entries using MongoDB Aggregation Pipelines.
+
+### Balance Calculation
+
+```text
+Balance =
+Total Credits
+-
+Total Debits
+```
+
+This approach prevents accidental balance corruption and mirrors real-world banking systems.
+
+---
+
+## 💸 Transaction Model
+
+Represents a transfer of funds between two accounts.
+
+### Fields
+
+| Field          | Type     | Description                             |
+| -------------- | -------- | --------------------------------------- |
+| fromAccount    | ObjectId | Sender account                          |
+| toAccount      | ObjectId | Receiver account                        |
+| amount         | Number   | Transfer amount                         |
+| status         | String   | Pending / Completed / Failed / Reversed |
+| idempotencyKey | String   | Prevents duplicate transactions         |
+
+### Transaction Lifecycle
+
+```text
+Pending
+   │
+   ├──► Completed
+   │
+   ├──► Failed
+   │
+   └──► Reversed
+```
+
+### Production Feature: Idempotency
+
+Every transaction requires a unique idempotency key.
+
+This guarantees that repeated API requests cannot accidentally process the same financial transaction multiple times.
+
+A common requirement in payment gateways and fintech systems.
+
+---
+
+## 📒 Ledger Model
+
+The most important component of the system.
+
+Stores immutable accounting records for every financial operation.
+
+### Fields
+
+| Field       | Type     | Description            |
+| ----------- | -------- | ---------------------- |
+| account     | ObjectId | Related account        |
+| transaction | ObjectId | Associated transaction |
+| amount      | Number   | Transaction amount     |
+| type        | String   | Credit / Debit         |
+
+### Immutable Ledger Architecture
+
+Ledger entries cannot be:
+
+* Updated
+* Deleted
+* Replaced
+* Modified
+
+Any attempt triggers an exception.
+
+```text
+Credit Entry
+     +
+Debit Entry
+     =
+Account Balance
+```
+
+### Why This Matters
+
+Real banking systems never modify historical financial records.
+
+Instead of editing transactions, new entries are created to maintain a complete audit trail.
+
+This project follows the same principle.
+
+### Audit Benefits
+
+* Complete transaction history
+* Regulatory-friendly design
+* Tamper-resistant records
+* Financial traceability
+
+---
+
+## 🚫 Token Blacklist Model
+
+Used for secure logout functionality.
+
+### Fields
+
+| Field | Type   | Description           |
+| ----- | ------ | --------------------- |
+| token | String | Invalidated JWT Token |
+
+### Security Enhancement
+
+When users logout:
+
+1. JWT token is stored in blacklist.
+2. Future requests using that token are rejected.
+3. Blacklisted tokens automatically expire after 3 days.
+
+### TTL Index
+
+```js
+expireAfterSeconds: 259200
+```
+
+This prevents database growth while maintaining logout security.
+
+---
+
+## 🔗 Entity Relationships
+
+```text
+User
+ │
+ └───< Account
+          │
+          │
+          ├──< Transaction >──┐
+          │                   │
+          │                   │
+          └──< Ledger >────────┘
+```
+
+### Relationship Overview
+
+* One User can own multiple Accounts.
+* One Transaction connects two Accounts.
+* One Transaction generates Ledger Entries.
+* Ledger Entries determine Account Balance.
+* JWT Tokens are managed separately through the Blacklist collection.
+
+---
+
+## 🎯 Financial Integrity Principles Implemented
+
+### Double-Entry Inspired Accounting
+
+Every transfer creates ledger records that preserve financial consistency.
+
+### Immutable Audit Trail
+
+Historical records can never be altered.
+
+### Dynamic Balance Calculation
+
+Balances are derived from ledger entries rather than stored values.
+
+### Idempotent Transactions
+
+Duplicate requests cannot create duplicate transfers.
+
+### Secure Authentication
+
+JWT Authentication with token revocation support.
+
+These principles closely resemble practices used in modern fintech, payment gateway, and banking backend systems.
+
 
 ## ⚙️ Installation Guide
 
